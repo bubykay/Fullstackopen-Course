@@ -13,22 +13,13 @@ const Header = ({header}) => {
   )
 }
 
-const HasVote = ({selected, votes}) => {
-  return (
-    <>
-      <p>has {votes[selected]} votes</p>
-    </>
-  )
-}
-
-const DisplayAnecdote = ({anecdote, votes})=> {
+const DisplayAnecdote = ({anecdote, votes, selected})=> {
   return (
     <>
       <p>
         {anecdote}
       </p>
-      <HasVote votes={votes} anecdote={anecdote} />
-      
+      <HasVote votes={votes} selected={selected} /> 
     </>
   )
 }
@@ -37,14 +28,25 @@ const MostVote = ({votes, anecdote}) => {
   const mostVoted = Math.max(...Object.values(votes))
   for(let key in votes){
     if(votes[key]===mostVoted){
-      console.log(votes)
       return (
-        <p>{anecdote[key]}</p>
+        <>
+          <p>{anecdote[key]}</p>
+          <p>has {mostVoted} votes</p>
+        </>
+        
       )
     }
   }
   return(
     <p>Please vote</p>
+  )
+}
+
+const HasVote = ({selected, votes}) => {
+  return (
+    <>
+      <p>has {votes[selected]?votes[selected]:0} votes</p>
+    </>
   )
 }
 
@@ -73,14 +75,15 @@ function App() {
     setVote(votes)
   }
 
+
   return (
     <div >
       <Header header="Anecdote of the day" />
-      <DisplayAnecdote anecdote={anecdotes[selected]} />
+      <DisplayAnecdote anecdote={anecdotes[selected]} selected={selected} votes={vote} />
       <Button text="Vote" handleClick={handleVote} />
       <Button handleClick={handleClick} text="Next anecdote" />
       <Header header="Anecdotes with most votes" />
-      <MostVote votes={vote} selected={selected} />
+      <MostVote votes={vote} anecdote={anecdotes} />
     </div>
   );
 }

@@ -33,7 +33,10 @@ function App() {
   useEffect(()=>{
     const country = oneCountry[0]?.name?oneCountry[0].name
                     :contryToDisplay.length===1?contryToDisplay[0].name:null
-    getWeather(country)?.then(response=>(setWeather(response.data))).catch(err=>err)
+    getWeather(country)?.then(response=>{
+      console.log(response)
+      (setWeather(response.data))
+    }).catch(err=>console.log(err))
   },[oneCountry,contryToDisplay])
 
  

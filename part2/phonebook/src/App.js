@@ -56,6 +56,7 @@ const App = () => {
         phoneService
       .updatePerson(personToAdd)
       .then(response=>{
+        console.log(response)
         if(response){
           setPersons(persons.map(person=>person.id !==personToAdd.id?person:personToAdd))
           notify("Entry successfully updated", 'success')

@@ -5,7 +5,8 @@ GET  http://localhost:3001/api/persons/
 PUT  http://localhost:3001/api/persons/
 Content-Type: application/json
 
-{"name": "Temilorun", "number": "ajskdhbfasdfa", "id": "6157e92d8bfddf25e6b9029c"}
+{"name":"Tosin","number":"07038276121","id":"615852c02dc92e78314abfc3"}
+
 ###
 DELETE  http://localhost:3001/api/persons/6154d240db33d5637dd588d1
 ###
@@ -23,4 +24,4 @@ DELETE https://kay-uhelsinki-part3.herokuapp.com/api/persons/4
 POST   http://localhost:3001/api/persons/
 content-type: application/json
 
-{"name":"Tem","number":"akdhcha","id":"6157e92d8bfddf25e6b9029c"}
+{"name":"Tosin","number":"0987729827328","id":"615852c02dc92e78314abfc3"}

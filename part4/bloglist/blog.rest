@@ -1,0 +1,12 @@
+GET http://localhost:3001/api/blog
+###
+
+POST http://localhost:3001/api/blog
+Content-Type: application/json
+
+{
+    "title" : "the man is good",
+    "author" : "kayode",
+    "url": "www.jayode.com",
+    "likes": 1
+}

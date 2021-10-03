@@ -3,16 +3,6 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 
 
-const url = process.env.MONGOURI
-
-mongoose.connect(url)
-  .then(result => {
-    console.log('connected to MongoDB')
-  })
-  .catch(err => {
-    console.log('error connecting to MongoDB:', err?.message)
-  })
-
 const phoneBookShema = new mongoose.Schema({
   name: {
     type: String,

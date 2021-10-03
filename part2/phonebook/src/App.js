@@ -8,6 +8,7 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import phoneService from './services/phoneService'
 
+
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
@@ -27,39 +28,66 @@ const App = () => {
 
   const notify = (message, type)=>{
     setNotifcationMessage({message, type})
-          setTimeout(()=>{
+          return setTimeout(()=>{
             setNotifcationMessage(null)
-          },5000)
+          },15000)
   }
+
+  
 
   const addPerson = (event) =>{
     event.preventDefault()
-    const data = {name: newName, number: newPhone}
-    if(!isExist){
-      phoneService
-      .addToPhonebook(data)
-      .then(response=>{
-        setPersons(persons.concat(response))
-      })
-    }else{
+    const personToAdd = {name: newName, number: newPhone}
+
+    //validate fields
+    if(personToAdd.name.length < 3 || personToAdd.number.length <8){
+       notify("name should be 3 characters min and number 8 characters min", "error")
+       return
+    }
+    const personExist = persons.find(person=>(person.name).toLocaleLowerCase()===(personToAdd.name).toLocaleLowerCase())
+    
+    //if entry exist in phonebook, update phone number
+    if(personExist){
+      personToAdd.id = personExist.id
+
+      //confirm entry update
       const response = window.confirm(`${newName} is already added to phonebook, replace old number with a new one?`)
       if(response){
-        const person = persons.find(person=>person.name===newName)
-        const newPerson = {...data, id:person.id}
-        phoneService.updatePerson(newPerson)
-        .then(returnedPerson=>{
-          setPersons(persons.map(person=>person.id !== returnedPerson.id?person:returnedPerson))
-        }).catch(err=>{
+        phoneService
+      .updatePerson(personToAdd)
+      .then(response=>{
+        if(response){
+          setPersons(persons.map(person=>person.id !==personToAdd.id?person:personToAdd))
+          notify("Entry successfully updated", 'success')
+        }else{
           notify(`information of ${newName} has already been removed from server`, 'error')
-        })
+        }
+        setNewName("")
+        setNewPhone("")
+      })
+      .catch(err=>{
+        notify(err.message, 'error')
+      })
       }
+      return
     }
-    setNewName('')
-    setNewPhone('')
-    notify(`${newName} added successfully`, 'success')
+
+    phoneService
+    .addToPhonebook(personToAdd)
+    .then(response=>{
+      if(response.id){
+        setPersons(persons.concat(response))
+        notify(`Entery  for ${personToAdd.name} successfully created`, "success")
+        setNewName("")
+        setNewPhone("")
+        return
+      }else{
+        notify(response.message, "error")
+        return
+      }
+    }).catch(err=>notify("Something went wrong", "error"))
   }
 
-  const isExist = persons.filter(person=>(person.name).toLocaleLowerCase()===newName.toLocaleLowerCase()).length
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)

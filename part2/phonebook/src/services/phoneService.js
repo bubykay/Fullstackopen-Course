@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = 'http://localhost:3001/persons'
+const baseURL = '/api/persons'
 
 
 const getAll = () => {
@@ -8,7 +8,9 @@ const getAll = () => {
         method: "GET",
         baseURL
     })
-     return request.then(response=>response.data)
+     return request.then(response=>{
+         return response.data
+     })
 }
 
 
@@ -29,14 +31,14 @@ const deletePerson = data => {
     return request.then(response=>response)
 }
 
-const updatePerson = data => {
+const updatePerson = data => {  
     const request = axios({
         method: "PUT",
-        baseURL: `${baseURL}/${data.id}`,
+        baseURL,
         data
     })
     return request.then(response=>{
-        console.log(response.data)
+
         return response.data
     })
 }

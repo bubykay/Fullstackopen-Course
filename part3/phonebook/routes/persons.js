@@ -1,50 +1,92 @@
+
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+const { nextTick } = require('process');
 
-
-var phonebook = require('../db/phonebook.json')
-
-const findById = (entries, id) => {
-    return entries.find(entry=>entry.id===Number(id))
-}
-
-const findByName = (entries, name)=> {
-    return entries.find(entry=>(entry.name).toLocaleLowerCase() === name.toLocaleLowerCase() )
-}
+const Phonebook = require('../models/persons')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+    Phonebook.find({})
+    .then(data=>{
+        res.json(data)
+    })
+    .catch(next)
 
-  res.send(phonebook);
 })
-.get('/:id', (req,res)=>{
+.get('/:id', (req,res, next)=>{
     const {id} = req.params
-    const idExist = findById(phonebook, id)
-    if(!idExist){
-        return res.send('invalid id')
-    }
-    res.send(phonebook.filter(person=>person.id===Number(id)))
+    Phonebook.findById({_id:id}).then(person=>{
+    if(person){
+        res.json(person)
+    }else{
+        const err = new Error(`User with id ${id} not found`)
+        err.statusCode = 404
+        next(err)
+    }})
+    .catch(next)
     
 })
-.delete('/:id', (req, res)=>{
+.delete('/:id', (req, res, next)=>{
     const {id} = req.params
-    const idExist = findById(phonebook, id)
-    if(!idExist){
-        return res.send('invalid id')
-    }
-    res.send(phonebook.filter(person=>person.id !== Number(id)))
+    Phonebook.findOneAndDelete({_id:id})
+    .then(response=>{
+        res.status(204).json(response)
+    })
+    .catch(next)
 
 })
-.post('/', (req, res)=>{
+.post('/', (req, res, next)=>{
     const {name, number} = req.body
-    const nameExist = findByName(phonebook, name)
-    if(!name || !number){
-        return res.status(400).send({error:"name and number must be provided"})
+    //check inputs
+    if(name.length && number.length){
+        //if inputs are valid, check for name conflict on DB
+        Phonebook.findOne({name})
+        .then(response=>{
+        if(response){
+            // if conflict throw error
+            throw new Error("duplicate Entry")
+        }else{
+            // if no conflict store entry to DB
+            const Phonenumber = new Phonebook({name, number})
+            Phonenumber.save()
+            .then(response=>{
+                res.status(201).json(response)
+            })
+            // catch error while saving to DB
+            .catch(err=>{
+                err.status = 400
+                 next(err)
+            })
+        }
+    })
+    // catch name conflict error
+    .catch(err=>{
+            err.name = "personExist"
+            err.status = 409
+            next(err)
+    })
+    }else{
+        // if inputs are not valid throw error
+        const err = new Error("Invalid input")
+        err.name = "invalidInput"
+        next(err)
     }
-    if(nameExist){
-        return res.status(400).send({error: "name must be unique"})
-    }
-    res.status(201).send({success:'Success'})
+})
+.put('/', (req, res, next)=>{
+    const {id, name, number} = req.body
+    if(name.length && number.length){
+    Phonebook.updateOne({_id:id}, req.body)
+    .then(response=>{
+        res.status(204).json({...response})
+    })
+    .catch(next)
+}else{
+    const err = new Error("Name and Number cannot be empty")
+    err.name = "invalidInput"
+    next(err)
+}
 })
 
 module.exports = router;

@@ -1,2 +1,7 @@
 
-GET http://localhost:3001/persons
+GET   http://localhost:3001/api/persons/
+###
+
+
+
+DELETE    http://localhost:3001/api/persons/61544e40e20398bac12012d7

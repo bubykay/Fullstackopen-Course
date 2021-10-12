@@ -1,0 +1,38 @@
+DELETE  http://localhost:3001/api/blogs/616458e80e6a098e81572515
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjA3M2VmMGVlODBhNzM4MTMwNGJlMiIsImlhdCI6MTYzMzk1MzI4OSwiZXhwIjoxNjM0MDM5Njg5fQ.DlTDJ_HmvC7zcPJTMZTH2nwhNm3LxTcfF_0v-QSx6uw
+
+{
+    "title": "I must get it smiles",
+    "author": "Kayode adetayo",
+    "url": "https://reactpatterns.com/name/",
+    "likes": 1
+  }
+###
+GET http://localhost:3001/api/blogs/6163f3e00adf7954fc93bcdb
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjA3M2VmMGVlODBhNzM4MTMwNGJlMiIsImlhdCI6MTYzMzk1MzI4OSwiZXhwIjoxNjM0MDM5Njg5fQ.DlTDJ_HmvC7zcPJTMZTH2nwhNm3LxTcfF_0v-QSx6uw
+###
+
+GET http://localhost:3001/api/blogs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjA3M2VmMGVlODBhNzM4MTMwNGJlMiIsImlhdCI6MTYzMzk1MzI4OSwiZXhwIjoxNjM0MDM5Njg5fQ.DlTDJ_HmvC7zcPJTMZTH2nwhNm3LxTcfF_0v-QSx6uw
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjA3M2VmMGVlODBhNzM4MTMwNGJlMiIsImlhdCI6MTYzMzk1MzI4OSwiZXhwIjoxNjM0MDM5Njg5fQ.DlTDJ_HmvC7zcPJTMZTH2nwhNm3LxTcfF_0v-QSx6uw
+
+{
+    "title": "I must get it smiles",
+    "author": "Kayode adetayo",
+    "url": "https://reactpatterns.com/name/",
+    "likes": 1
+  }
+###
+
+PUT http://localhost:3001/api/blogs/5a422aa71b54a676234d17f8
+Content-Type: application/json
+
+{
+        "likes": 130
+    }
+

@@ -1,0 +1,24 @@
+DELETE  http://localhost:3001/api/users/61607077c6d48a90b9defc85
+###
+GET http://localhost:3001/api/users/
+###
+
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+    {
+        "username": "tosinima",
+        "password": "0fofOiasdfiaF",
+        "name": "Tosin ima"
+    }
+###
+
+
+
+PUT http://localhost:3001/api/blogs/5a422aa71b54a676234d17f8
+Content-Type: application/json
+
+{
+        "likes": 130
+    }
+

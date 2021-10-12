@@ -1,6 +1,6 @@
 const Blog = require('../model/blog')
 
-const initialBlogs = require('./blogs')
+const initialBlogs = require('../mockData/blogs')
 
 
 const blogsInDB =  async ()=>{
@@ -29,10 +29,20 @@ const deleteAll = async () => {
       return response.toJSON()
   }
 
+  const getToken = request => {
+      const authorization =  request.get('authorization')
+      if(authorization && authorization.toLowerCase().startsWith('bearer '))
+      {
+        return authorization.substring(7)
+      }
+      return null
+  }
+
 module.exports = {
     blogsInDB,
     hasId,
     initialBlogs,
     insertMany,
-    deleteAll
+    deleteAll,
+    getToken
 }

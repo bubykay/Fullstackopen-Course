@@ -10,17 +10,26 @@ const helper = require('../utils/blog_helpers')
 
 const api = superTest(app)
 const resourceUrl = '/api/blogs'
-const reqToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjA3M2VmMGVlODBhNzM4MTMwNGJlMiIsImlhdCI6MTYzMzk1MzI4OSwiZXhwIjoxNjM0MDM5Njg5fQ.DlTDJ_HmvC7zcPJTMZTH2nwhNm3LxTcfF_0v-QSx6uw"
+let token
+let header
+const mockedUser = require('../mockData/users')
+
 
 
 //operation before each test case (start with fresh state)
 beforeEach(async()=>{
     await Blog.deleteMany({})
+    const getuser = await api
+                            .post('/api/login')
+                            .send(mockedUser[0])
+    token = getuser.body.token
+    header =  {Authorization: `Bearer ${token}`}
     for(let blog of helper.initialBlogs){
-        console.log(blog)
         await api
                 .post(resourceUrl)
-                .send(blog).set({Authorization: reqToken})
+                .send(blog)
+                .set(header)
+        
     }
 },100000)
 
@@ -28,7 +37,7 @@ describe('View blog operation', ()=>{
     test('total blogs equal to inserted', async ()=>{
         const response = await api
             .get(resourceUrl)
-            .set({Authorization: reqToken})
+            .set(header)
             .expect(200)
             .expect("Content-Type", /application\/json/) 
             
@@ -40,7 +49,7 @@ describe('View blog operation', ()=>{
         // const reponse = await h
         const response = await api
                     .get(resourceUrl)
-                    .set({Authorization: reqToken})
+                    .set(header)
                     .expect(200)
                     .expect("Content-Type", /application\/json/)
                     // console.log(response)
@@ -61,7 +70,7 @@ test('a valid blog is added to the db', async ()=>{
     await api
             .post(resourceUrl)
             .send(newBody)
-            .set({Authorization: reqToken})
+            .set(header)
             .expect(201)
             .expect("Content-Type", /application\/json/)
 
@@ -82,7 +91,7 @@ test('likes default to 0 if not present in request body', async ()=>{
         const response = await api
                                 .post(resourceUrl)
                                 .send(newBody)
-                                .set({Authorization: reqToken})
+                                .set(header)
                                 .expect(201)
                                 .expect("Content-Type", /application\/json/)
         expect(response.body.likes).toBe(0)
@@ -98,7 +107,7 @@ test('if title or url properties is missing 400 is returned', async ()=>{
     await api
             .post(resourceUrl)
             .send(newBody)
-            .set({Authorization: reqToken})
+            .set(header)
             .expect(400)
 })
 })
@@ -107,10 +116,9 @@ describe("delete blog operation", ()=>{
     test('single blog with valid id can be deleted', async ()=>{
         const blogAtStart = await helper.blogsInDB()
         const validID = blogAtStart[0].id
-        console.log('id to be deleted', validID)
         await api
                 .delete(`${resourceUrl}/${validID}`)
-                .set({Authorization: reqToken})
+                .set(header)
                 .expect(200)
         const blogAtEnd = await helper.blogsInDB()
         expect(blogAtEnd.length).toBe(blogAtStart.length -1)
@@ -124,7 +132,7 @@ describe("update blog operation", ()=>{
         const response = await api
                                 .put(`${resourceUrl}/${updateObj[0].id}`)
                                 .send({...updateObj, likes:newlikes})
-                                .set({Authorization: reqToken})
+                                .set(header)
                                 .expect(200)
                                 .expect("Content-Type", /application\/json/)
         expect(response.body.likes).toBe(newlikes)

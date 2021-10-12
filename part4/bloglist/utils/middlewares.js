@@ -38,7 +38,6 @@ const loggedInUser = async(req, res, next)=>{
         
         if(decodedUser.id){
             const user = await User.findById(decodedUser.id)
-            console.log(user)
             req.user = {...user, id:user._id.toString()}
         }
     }

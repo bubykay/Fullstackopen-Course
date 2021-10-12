@@ -14,24 +14,23 @@ const logger = require('../utils/logger')
 
 beforeEach(async()=>{
     await User.deleteMany({})
-    // await User.insertMany(initialUsers)
     await helper.inserMany()
 }, 100000)
 
-// describe('view users in db', ()=>{
-//     test('get total numbers of users', async()=>{
-//         const response = await api
-//                                 .get(resourceUrl)
-//                                 .expect(200)
-//                                 .expect('Content-Type', /application\/json/)
-//         expect(initialUsers).toHaveLength(response.body.length)
-//     })
-// },100000)
+describe('view users in db', ()=>{
+    test('get total numbers of users', async()=>{
+        const response = await api
+                                .get(resourceUrl)
+                                .expect(200)
+                                .expect('Content-Type', /application\/json/)
+        expect(initialUsers).toHaveLength(response.body.length)
+    })
+},100000)
 
 describe('user creation', ()=>{
     test('user not created when when request username is already taken', async()=>{
         const usersAtStart = await helper.usersInDb()
-        console.log("users at start",usersAtStart)
+
         const newUser = {
             username: "gsaba8ter1",
             password: "0fofOiF",
@@ -42,8 +41,6 @@ describe('user creation', ()=>{
         .expect(500)
         .expect('Content-Type', /application\/json/)
         const usersAtEnd = await helper.usersInDb()
-        console.log("users at end",usersAtEnd)
-        console.log(usersAtStart.length, usersAtEnd.length)
         expect(usersAtStart.length).toBe(usersAtEnd.length)
     })
 },1000000000)

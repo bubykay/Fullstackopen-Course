@@ -45,11 +45,12 @@ app.use(morgan('tiny'))
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(middlewares.tokenExtractor)
+app.use('/api/login', loginRouter)
 
 app.use('/api/users', userRouter)
+app.use(middlewares.tokenExtractor)
+
 app.use('/api/blogs', middlewares.loggedInUser, blogRouter);
-app.use('/api/login', loginRouter)
 
 
 app.use(errorHandler)

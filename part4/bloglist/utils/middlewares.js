@@ -5,6 +5,7 @@ const logger = require("./logger")
 const User = require('../model/user')
 
 const errorHandler = (error, req, res, next) =>{
+    logger.error(error.message)
     if(error.name ==='ValidationError'){
         return res.status(400).send({error: error.message})
     }
@@ -18,7 +19,7 @@ const errorHandler = (error, req, res, next) =>{
     else if(error.name === 'CastError'){
         return res.status(400).send({error: 'malformattedid'})
     }
-    // logger.error(error.message)
+
     next(error)
 }
 

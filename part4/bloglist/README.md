@@ -10,7 +10,7 @@ $ npm install
 <!--  create a .env file and put there the MONGODB_URI for connecting to your mongodb database -->
 $ echo "MONGODB_URI=<YOUR-MONGODB-URI>" > .env
 $ echo "TEST_MONGODB_URI=<YOUR-TEST-MONGODB-URI>" > .env
-$ echo "DEV_MONGODB_URI=<YOUR-DEV-MONGODB-URI>" > .env
+$ echo "MONGO_URI=<YOUR-DEV-MONGODB-URI>" > .env
 
 ### Set a variable SECRET which is a digital signature ensures that only parties who know the secret can generate a valid token.
 $ echo "SECRET=yoursecretphrase" > .env

@@ -49,8 +49,8 @@ app.use('/api/login', loginRouter)
 
 app.use('/api/users', userRouter)
 app.use(middlewares.tokenExtractor)
-
 app.use('/api/blogs', middlewares.loggedInUser, blogRouter);
+
 
 
 app.use(errorHandler)

@@ -1,6 +1,6 @@
-DELETE  http://localhost:3001/api/blogs/616458e80e6a098e81572515
+DELETE  http://localhost:3001/api/blogs/61670de8a0df847fab82f6f4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjViMDRjY2RhYTQwMTIzZWUwODllNyIsImlhdCI6MTYzNDA2NjkzNCwiZXhwIjoxNjM0MTUzMzM0fQ.cOEqjc215nKEVMuFgPmQIFYvq6etX8w9Vz9QbpY5ZE4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjViMDRjY2RhYTQwMTIzZWUwODllNyIsImlhdCI6MTYzNDIwODczNSwiZXhwIjoxNjM0Mjk1MTM1fQ.Vm38GZ65vAWbMBZiNTgK2Fx1bppQF8vIRM3byQo_jWk
 
 {
     "title": "I must get it smiles",
@@ -14,25 +14,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pb
 ###
 
 GET http://localhost:3001/api/blogs/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjViMDRjY2RhYTQwMTIzZWUwODllNyIsImlhdCI6MTYzNDA2NjkzNCwiZXhwIjoxNjM0MTUzMzM0fQ.cOEqjc215nKEVMuFgPmQIFYvq6etX8w9Vz9QbpY5ZE4
 ###
 
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjViMDRjY2RhYTQwMTIzZWUwODllNyIsImlhdCI6MTYzNDA2NzMwNSwiZXhwIjoxNjM0MTUzNzA1fQ.o4P9gYtuNW1l1HghYO7zkxR7L-DaPZlAWo3PmSR_0q0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYnVieWtheSIsImlkIjoiNjE2ODE1YmMwZGVjMDE4NGFjMjZkZjBmIiwiaWF0IjoxNjM0MjExMzgzLCJleHAiOjE2MzQyOTc3ODN9.J933T84Hww4cBK_-UluvtT-CetLrH4MwpqpL-MkYhXc
 
 {
-    "title": "I must get it smiles",
+    "title": "Another blog with a different user",
     "author": "Kayode adetayo",
     "url": "https://reactpatterns.com/name/",
-    "likes": 1
+    "likes": 10
   }
 ###
 
-PUT http://localhost:3001/api/blogs/5a422aa71b54a676234d17f8
+PUT http://localhost:3001/api/blogs/616669b5a0df847fab82f5ac
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9zaW5pbWEiLCJpZCI6IjYxNjViMDRjY2RhYTQwMTIzZWUwODllNyIsImlhdCI6MTYzNDIwMzA2MiwiZXhwIjoxNjM0Mjg5NDYyfQ.JqUbrV94lujFelCfHPLTGxsuwX9OmULbnD6KmLFsY1Y
 
 {
-        "likes": 130
-    }
+    "title": "Tosin is a great mother",
+    "author": "Temilorun",
+    "url": "temilorun.com/tosin",
+    "user": "6165b04ccdaa40123ee089e7",
+    "likes": 1000000
+  }
 

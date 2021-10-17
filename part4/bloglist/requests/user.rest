@@ -7,10 +7,15 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
     {
-        "username": "tosinima",
-        "password": "0fofOiasdfiaF",
-        "name": "Tosin ima"
+        "username": "bubykay",
+        "password": "kayus",
+        "name": "Kayode Adetayo"
     }
+
+    #  {
+    #     "username": "tosinima",
+    #     "password": "0fofOiasdfiaF"
+    # }
 ###
 
 

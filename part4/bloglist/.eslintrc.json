@@ -12,5 +12,24 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "no-param-reassign":"off",
+        "no-underscore-dangle":"off",
+        "no-unused-vars":"error",
+        "consistent-return":"off",
+        "indent" : [
+            "error",
+            4
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "arrow-spacing": [
+            "error", {"before": true, "after": true}
+        ],
+        "eqeqeq": "error",
+        "no-trailing-spaces": "error",
+        "no-console":"error"
+       
     }
 }

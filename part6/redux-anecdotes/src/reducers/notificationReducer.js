@@ -32,16 +32,18 @@ export const hideNotification = (id) => {
 
 
 let nextNotification = 0;
+let timeOutExist;
 export const  displayNotification = ( message) => {
     return async dispatch => {
         const id = nextNotification++;
-        await new Promise((resolve) => {
-            dispatch(showNotification(message, id));
-            setTimeout(() => {
-                dispatch(hideNotification(id));
-                resolve();
-            }, 5000);
-        });
+        if(timeOutExist){
+            clearTimeout(timeOutExist);
+        }
+        dispatch(showNotification(message, id));
+        timeOutExist = setTimeout(() => {
+            dispatch(hideNotification(id));
+        }, 5000);
+
     };
 
 };

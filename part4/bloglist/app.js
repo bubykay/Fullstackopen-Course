@@ -13,6 +13,7 @@ const blogRouter = require('./controllers/blog');
 const userRouter = require('./controllers/users');
 const loginRouter = require('./controllers/login');
 const testingRouter = require('./controllers/testing');
+const commentRouter = require('./controllers/comment');
 
 const config = require('./utils/config');
 const logger = require('./utils/logger');
@@ -47,10 +48,11 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/login', loginRouter);
-
 app.use(middlewares.tokenExtractor);
+// app.use(middlewares.isloggedIn);
+app.use('/api/login', loginRouter);
 app.use('/api/users', userRouter);
+app.use('/api/comment', commentRouter);
 if (process.env.NODE_ENV === 'test') {
     app.use('/api/testing', testingRouter);
 }

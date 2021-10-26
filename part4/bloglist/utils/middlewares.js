@@ -7,16 +7,16 @@ const logger = require('./logger');
 const User = require('../model/user');
 
 const errorHandler = (error, req, res, next) => {
-    logger.error(error.message);
+    logger.error('from erro handler', error.name);
     if (error.name === 'ValidationError') {
         return res.status(400).send({ error: error.message });
     }
     if (error.name === 'JsonWebTokenError') {
-        return res.status(400).send({ error: 'invalid token' });
+        return res.status(401).send({ error: 'invalid token' });
     }
 
     if (error.name === 'TokenExpiredError') {
-        return res.status(400).send({ error: 'token expired' });
+        return res.status(401).send({ error: 'token expired' });
     }
     if (error.name === 'CastError') {
         return res.status(400).send({ error: 'malformattedid' });
@@ -41,8 +41,18 @@ const loggedInUser = async (req, res, next) => {
                 req.user = { ...user, id: user._id.toString() };
             }
         } else {
+            console.log('error from loggedInUser middleware');
             return res.status(401).send({ error: 'Authorization error' });
         }
+    }
+    next();
+};
+
+const isloggedIn = async (req, res, next) => {
+    const user = jwt.verify(req.token, process.env.SECRETE);
+    res.loginValid = false;
+    if (user.id) {
+        res.loginValid = true;
     }
     next();
 };
@@ -51,4 +61,5 @@ module.exports = {
     errorHandler,
     tokenExtractor,
     loggedInUser,
+    isloggedIn,
 };

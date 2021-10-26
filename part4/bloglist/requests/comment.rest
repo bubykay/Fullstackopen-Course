@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/comment
+Content-Type: application/json
+
+{
+  "blogId": "616669b5a0df847fab82f5ac",
+  "userId": "616815bc0dec0184ac26df0f",
+  "comment": "Testing testing from another user bubykay"
+}
+###
+
+GET http://localhost:3001/api/comment

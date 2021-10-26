@@ -11,10 +11,11 @@ blogRouter
     })
     .get('/:id', async (req, res) => {
         const { id } = req.params;
-        const response = await Blog.findById(id);
+        const response = await Blog.findById(id).populate('user', { username: 1, name: 1 }).populate('comments');
         res.status(200).send(response);
     })
     .get('/', async (req, res) => {
+        // console.log(res.loginValid);
         const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 });
         res.json(blogs);
     })
@@ -48,7 +49,7 @@ blogRouter
     .delete('/:id', async (req, res) => {
         const { id } = req.params;
         if (id) {
-            const blogToDelete = await Blog.findById(id);
+            const blogToDelete = await Blog.findById(id).populate('comments', { comment: 1 });
             if (!blogToDelete) {
                 return res
                     .status(400)
@@ -67,11 +68,13 @@ blogRouter
     })
     .put('/:id', async (req, res) => {
         if (!req.user) {
+            console.log('error from put method');
             return res.status(401).send('login required');
         }
         const {
             likes, url, title, author, user,
         } = req.body;
+        // console.log(req.body);
         if (likes && url && title && author && user) {
             // const result = await Blog.findById(req.params.id)
             const serverRes = await Blog

@@ -1,0 +1,19 @@
+{
+  "name": "first-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "calculateBmi": "ts-node calculateBmi.ts",
+    "exerciseCalculator": "ts-node exerciseCalculator.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1"
+  }
+}

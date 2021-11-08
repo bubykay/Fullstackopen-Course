@@ -10,7 +10,7 @@ const getALL = async() => {
 };
 
 const createAComment = async ({ blogId, userId, comment }) => {
-    if(blogId&&userId&&comment){
+    if(blogId && userId && comment){
         const response = axios({
             method: 'POST',
             baseURL,

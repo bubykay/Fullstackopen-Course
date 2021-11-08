@@ -68,7 +68,6 @@ blogRouter
     })
     .put('/:id', async (req, res) => {
         if (!req.user) {
-            console.log('error from put method');
             return res.status(401).send('login required');
         }
         const {
@@ -91,5 +90,4 @@ blogRouter
                 .send('likes, url, title, author and/or user can not be empty');
         }
     });
-
 module.exports = blogRouter;

@@ -13,7 +13,7 @@ commentRouter
 
     .post('/', async (req, res) => {
         const { userId, blogId, comment } = req.body;
-        console.log(req.body);
+
         if (userId && blogId && comment) {
             const newComment = new Comment({
                 user: userId,

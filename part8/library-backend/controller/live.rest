@@ -1,0 +1,1 @@
+GET https://content.livesportmedia.eu/delivery?zones=3477&clientType=PC&no_flash=1

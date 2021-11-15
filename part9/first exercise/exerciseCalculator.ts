@@ -14,37 +14,37 @@ interface inputs {
 }
 
 const parseArguments = (val:Array<string>): inputs => {
-  if(val.length<3) throw new Error('arguments too many')
-  const args = val.splice(2)
-  const days = []
+  if(val.length<3) throw new Error('arguments too many');
+  const args = val.splice(2);
+  const days = [];
   for(let i=0; i<args.length-1; i++){
     if(!isNaN(Number(args[i]))){
-      days.push(Number(args[i]))
+      days.push(Number(args[i]));
     }else{
-      console.log(args)
-      throw new Error('argument can only contain number')
+      console.log(args);
+      throw new Error('argument can only contain number');
     }
   }
-  let target
+  let target;
   if(!isNaN(Number(args[args.length-1]))){
-    target = Number(args[args.length-1])
+    target = Number(args[args.length-1]);
   }else{
-    throw new Error('target can only be number')
+    throw new Error('target can only be number');
   }
 
   return{
     days,
     target
-  }
-}
+  };
+};
 
 
 const calculateExercises = (env:Array<string>):result=>{
-  const {days, target} = parseArguments(env)
-  let trainingDays = 0
+  const {days} = parseArguments(env);
+  let trainingDays = 0;
   days.forEach(day=>{
-    if(day>0) trainingDays += 1
-  })
+    if(day>0) trainingDays += 1;
+  });
 
   return{ 
     periodLength: days.length,
@@ -54,15 +54,15 @@ const calculateExercises = (env:Array<string>):result=>{
     ratingDescription: 'not too bad but could be better',
     target: 2,
     average: 1.9285714285714286 
-  }
-  }
+  };
+  };
 
 try {
-  console.log(calculateExercises(process.argv))
+  console.log(calculateExercises(process.argv));
 } catch (error) {
-  let errorMessage = 'Something bad happened'
+  let errorMessage = 'Something bad happened';
   if(error instanceof Error){
-    errorMessage += ' Error: ' + error.message
+    errorMessage += ' Error: ' + error.message;
   }
-  console.log(errorMessage)
+  console.log(errorMessage);
 }

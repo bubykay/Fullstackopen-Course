@@ -1,12 +1,34 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
 import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis, Gender , Types, HealthCheckRating} from "../types";
 
 // structure of a single option
 export type GenderOption = {
   value: Gender;
   label: string;
+};
+
+export type TypeOption = {
+  value: Types|string;
+  label: string;
+};
+
+export type HealthOptions = {
+  value: HealthCheckRating | string,
+  label: string
+};
+
+type HealthRatingSelectProps = {
+  name: string;
+  label : string;
+  options: HealthOptions[]
+};
+
+type TypeSelectFieldProps = {
+  name: string;
+  label: string
+  options: TypeOption[]
 };
 
 // props for select field component
@@ -24,14 +46,48 @@ export const SelectField = ({
   <Form.Field>
     <label>{label}</label>
     <Field as="select" name={name} className="ui dropdown">
-      {options.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.label || option.value}
-        </option>
-      ))}
+      {options.map(option => {
+        return (
+          <option key={option.value} value={option.value}>
+            {option.label || option.value}
+          </option>
+        );
+      })}
     </Field>
   </Form.Field>
 );
+
+export const TypeSelectField = ({name, label, options}:TypeSelectFieldProps) => (
+  <Form.Field>
+  <label>{label}</label>
+  <Field as='select' name={name} className='ui dropdown'  >
+  {options.map(option => {
+      return (
+        <option key={option.label} value={option.value}>
+          {option.label || option.value}
+        </option>
+      );
+    })}
+  </Field>
+</Form.Field>
+);
+
+export const HealthRatingSelectField = ({name, label, options}:HealthRatingSelectProps)=> (
+  <Form.Field>
+    <label>{label}</label>
+    <Field as='select' name={name} className='ui dropdown'  >
+    {options.map(option => {
+        return (
+          <option id={option.label} key={option.value} value={option.value}>
+            {option.label || option.value}
+          </option>
+        );
+      })}
+    </Field>
+  </Form.Field>
+);
+
+
 
 interface TextProps extends FieldProps {
   label: string;
@@ -88,14 +144,16 @@ export const DiagnosisSelection = ({
     data: DropdownProps
   ) => {
     setFieldTouched(field, true);
+    // console.log(data);
     setFieldValue(field, data.value);
   };
-
+  
   const stateOptions = diagnoses.map(diagnosis => ({
     key: diagnosis.code,
     text: `${diagnosis.name} (${diagnosis.code})`,
     value: diagnosis.code
   }));
+
 
   return (
     <Form.Field>

@@ -9,11 +9,13 @@ import { Action } from "./reducer";
 export type State = {
   patients: {[id: string]: Patient};
   diagnosis: {[code: string]: Diagnosis}
+  error: string
 };
 
 const initialState: State = {
   patients: {},
-  diagnosis: {}
+  diagnosis: {},
+  error: ''
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

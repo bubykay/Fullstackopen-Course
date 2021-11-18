@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import { apiBaseUrl } from "./constants";
-import { useStateValue , setPatientList, setDiagnosisList} from "./state";
+import { useStateValue , setPatientList, setDiagnosisList, } from "./state";
 import { Diagnosis, Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
-import PatientPage from "./components/PatientPage";
+import PatientPage from "./PatientPage";
 
 const App = () => {
   const [,dispatch] = useStateValue();
@@ -22,6 +22,14 @@ const App = () => {
         dispatch(setPatientList(patientListFromApi));
         dispatch(setDiagnosisList(diagnosisListFromApi));
       } catch (e) {
+        let erroMessage = "Something went wrong";
+        if(axios.isAxiosError(e) && e.response){
+          erroMessage = 'Error ' + erroMessage; // + e.response.data.message
+          console.log(erroMessage);
+            // dispatch(setAndClearError(erroMessage))
+          
+        }
+        // dispatch(setErrorMessage(erroMessage))
         console.error(e);
       }
     };
